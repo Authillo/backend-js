@@ -1,3 +1,5 @@
+# compiled output
+/lib
 # Logs
 logs
 *.log
