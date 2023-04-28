@@ -1,0 +1,22 @@
+{
+  "name": "backend-js",
+  "version": "0.0.1",
+  "description": "Backend package to help accelerate authillo integration for javascript (or typescript) based backends",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Authillo/backend-js.git"
+  },
+  "keywords": [
+    "authillo"
+  ],
+  "author": "Authillo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Authillo/backend-js/issues"
+  },
+  "homepage": "https://github.com/Authillo/backend-js#readme"
+}
