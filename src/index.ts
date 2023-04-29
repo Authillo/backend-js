@@ -111,3 +111,4 @@ class authillo {
 		return (await userInfoRes.json()) as USERINFO_RESPONSE;
 	};
 }
+export const Authillo = new authillo();
