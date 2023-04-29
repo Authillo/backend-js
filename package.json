@@ -22,10 +22,12 @@
 	},
 	"homepage": "https://github.com/Authillo/backend-js#readme",
 	"devDependencies": {
+		"@types/jsonwebtoken": "^9.0.2",
 		"@types/node": "^18.16.2",
 		"typescript": "^5.0.4"
 	},
 	"dependencies": {
+		"jsonwebtoken": "^9.0.0",
 		"node-fetch": "^3.3.1"
 	}
 }
