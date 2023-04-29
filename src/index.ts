@@ -1,4 +1,4 @@
-import { TOKEN_RESPONSE } from "./types/token";
+import { ParsedIdToken, TOKEN_ERROR_CODES, TOKEN_RESPONSE } from "./types/token";
 
 import * as crypto from "crypto";
 import fetch from "node-fetch";
@@ -54,7 +54,11 @@ class authillo {
 		const codeChallenge = crypto.createHash("sha256").update(codeVerifier).digest("base64url");
 		return { codeVerifier, codeChallenge };
 	};
-	public tokenRequest = async (code: string, redirect_uri: string, code_verifier?: string) => {
+	public tokenRequest = async (
+		code: string,
+		redirect_uri: string,
+		code_verifier?: string
+	): Promise<TOKEN_RESPONSE & { parsedIdToken?: ParsedIdToken }> => {
 		if (!this._initializationIsValid())
 			throw `invalid configuration -- [make sure .initialize() is run before calling .tokenRequest()]`;
 		if (code_verifier == null) {
@@ -74,8 +78,26 @@ class authillo {
 		const tokenRes = await fetch(url, {
 			method: "POST",
 		});
-		const parsed = await tokenRes.json();
-		// jwt.verify()
-		return parsed as TOKEN_RESPONSE;
+		this._log("parsing response from token request");
+		const parsed = (await tokenRes.json()) as TOKEN_RESPONSE;
+		if (parsed.result.succeeded !== true) {
+			this._log(
+				`token request failed with error: ${parsed.result?.feedback?.customCode} & message: ${parsed.result?.feedback?.customCode}`
+			);
+			return parsed;
+		}
+		this._log("verifying id_token");
+		try {
+			const parsedIdToken = jwt.verify(
+				parsed.result.feedback.id_token,
+				this.jwtKey!
+			) as any as ParsedIdToken;
+			this._log("id_token is valid");
+			return { ...parsed, parsedIdToken };
+		} catch (e) {
+			return {
+				result: { succeeded: false, feedback: { customCode: TOKEN_ERROR_CODES.INVALID_ID_TOKEN } },
+			};
+		}
 	};
 }
