@@ -3,6 +3,7 @@ import { ParsedIdToken, TOKEN_ERROR_CODES, TOKEN_RESPONSE } from "./types/token"
 import * as crypto from "crypto";
 import fetch from "node-fetch";
 import * as jwt from "jsonwebtoken";
+import { USERINFO_RESPONSE } from "./types/userinfo";
 /**
  * @param {string} clientId - Unique identifier of your app - for a full explanation of this parameter, visit https://authillo.com/docs/backend/clientId
  * @param {string} clientSecret - Secret Code for your app - for a full explanation of this parameter, visit https://authillo.com/docs/backend/clientSecret
@@ -99,5 +100,14 @@ class authillo {
 				result: { succeeded: false, feedback: { customCode: TOKEN_ERROR_CODES.INVALID_ID_TOKEN } },
 			};
 		}
+	};
+	public getUserInfo = async (access_token: string) => {
+		const url = `https://auth.authillo.com/userinfo`;
+		const userInfoRes = await fetch(url, {
+			headers: {
+				Authorization: `Bearer ${access_token}`,
+			},
+		});
+		return (await userInfoRes.json()) as USERINFO_RESPONSE;
 	};
 }
