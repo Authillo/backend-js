@@ -2,12 +2,13 @@
 	"name": "@authillo/backend-js",
 	"version": "0.0.9",
 	"description": "Backend package to help accelerate authillo integration for javascript (or typescript) based backends",
-	"main": "lib/index.js",
-	"types": "lib/index.d.ts",
+	"main": "dist/cjs/index.js",
+	"module": "dist/mjs/index.js",
+	"types": "dist/index.d.ts",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "tsc",
-		"safeBuild": "rm -rf dist/* && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && ./fixup"
+		"safeBuild": "rm -fr dist/* && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && bash ./fixup"
 	},
 	"repository": {
 		"type": "git",
