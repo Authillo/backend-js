@@ -1,6 +1,6 @@
 {
 	"name": "@authillo/backend-js",
-	"version": "0.0.8",
+	"version": "0.0.9",
 	"description": "Backend package to help accelerate authillo integration for javascript (or typescript) based backends",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
@@ -28,6 +28,6 @@
 	},
 	"dependencies": {
 		"jsonwebtoken": "^9.0.0",
-		"node-fetch": "^3.3.1"
+		"node-fetch": "^2"
 	}
 }

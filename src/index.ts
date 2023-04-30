@@ -1,7 +1,7 @@
 import { ParsedIdToken, TOKEN_ERROR_CODES, TOKEN_RESPONSE } from "./types/token";
 
 import * as crypto from "crypto";
-import fetch from "node-fetch";
+const fetch = require("node-fetch");
 import * as jwt from "jsonwebtoken";
 import { USERINFO_RESPONSE } from "./types/userinfo";
 /**
