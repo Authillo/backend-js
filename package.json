@@ -1,10 +1,9 @@
 {
 	"name": "@authillo/backend-js",
-	"version": "0.0.9",
+	"version": "0.1.1",
 	"description": "Backend package to help accelerate authillo integration for javascript (or typescript) based backends",
 	"main": "dist/cjs/index.js",
 	"module": "dist/mjs/index.js",
-	"types": "dist/index.d.ts",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "tsc",
