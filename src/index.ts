@@ -1,9 +1,24 @@
 import { ParsedIdToken, TOKEN_ERROR_CODES, TOKEN_RESPONSE } from "./types/token";
+type Attribute =
+	| "name"
+	| "age"
+	| "face"
+	| "selfie"
+	| "idphoto"
+	| "email"
+	| "phone"
+	| "license"
+	| "sex"
+	| "birthdate"
+	| "linkedin"
+	| "google"
+	| "instagram";
 
 import * as crypto from "crypto";
 const fetch = require("node-fetch");
 import * as jwt from "jsonwebtoken";
 import { USERINFO_RESPONSE } from "./types/userinfo";
+import { SEND_VERIFICATION_CODE_RESPONSE } from "types/send-verification-code";
 /**
  * @param {string} clientId - Unique identifier of your app - for a full explanation of this parameter, visit https://authillo.com/docs/backend/clientId
  * @param {string} clientSecret - Secret Code for your app - for a full explanation of this parameter, visit https://authillo.com/docs/backend/clientSecret
@@ -110,5 +125,47 @@ class authillo {
 		});
 		return (await userInfoRes.json()) as USERINFO_RESPONSE;
 	};
+	public sendVerificationLink = async (
+		user_phone_or_email: string,
+		attributes: Attribute[],
+		redirect_uri?: string
+	) => {
+		if (!this._initializationIsValid())
+			throw `invalid configuration -- [make sure .initialize() is run before calling .sendVerificationLink()]`;
+		if (this.enforceStrictSecurity === true)
+			throw "sendVerificationLink method is not allowed when enforceStrictSecurity is set to true. ";
+		const attributesParameter = attributes.reduce((prev, cur) => {
+			return prev + ` ${cur}`;
+		}, "");
+		const url = `https://auth.authillo.com/sendverificationlink?redirect_uri=${redirect_uri}&attributes=${attributesParameter}&user_phone_or_email=${user_phone_or_email}&client_id=${this.clientId}&client_secret=${this.clientSecret}`;
+		const sendVerificationLinkResponse = await fetch(url);
+		return (await sendVerificationLinkResponse.json()) as SEND_VERIFICATION_CODE_RESPONSE;
+	};
+	// verify: (
+	// 	user_phone_number: string,
+	// 	attributes: Attribute[]
+	// ) => Promise<{ userStatus: "pending" | "verified" }> = async (
+	// 	user_phone_number: string,
+	// 	attributes: Attribute[]
+	// ) => {
+	// 	return { userStatus: "pending" };
+	// };
+
+	// getVerifiedInfo: (user_phone_number: string, attributes: Attribute[]) => Promise<result> = async (
+	// 	user_phone_number: string,
+	// 	attributes: Attribute[]
+	// ) => {
+	// 	return {
+	// 		user: {
+	// 			sub: "asdflkivnwi29040nsfl1i38fncsk10234uls10csdnf0s810cn",
+	// 			email: "james@authillo.com",
+	// 			faceInfo: {
+	// 				faceVerified: true,
+	// 				riskScore: 0,
+	// 				faceVerificationMR: true,
+	// 			},
+	// 		},
+	// 	};
+	// };
 }
 export const Authillo = new authillo();
