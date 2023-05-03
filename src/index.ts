@@ -18,7 +18,7 @@ import * as crypto from "crypto";
 const fetch = require("node-fetch");
 import * as jwt from "jsonwebtoken";
 import { USERINFO_RESPONSE } from "./types/userinfo";
-import { SEND_VERIFICATION_CODE_RESPONSE } from "types/send-verification-code";
+import { SEND_VERIFICATION_LINK_RESPONSE } from "types/send-verification-link";
 /**
  * @param {string} clientId - Unique identifier of your app - for a full explanation of this parameter, visit https://authillo.com/docs/backend/clientId
  * @param {string} clientSecret - Secret Code for your app - for a full explanation of this parameter, visit https://authillo.com/docs/backend/clientSecret
@@ -141,7 +141,7 @@ class authillo {
 		}, "");
 		const url = `https://api.authillo.com/sendverificationlink?redirect_uri=${redirect_uri}&attributes=${attributesParameter}&user_phone_or_email=${user_phone_or_email}&client_id=${this.clientId}&client_secret=${this.clientSecret}`;
 		const sendVerificationLinkResponse = await fetch(url);
-		return (await sendVerificationLinkResponse.json()) as SEND_VERIFICATION_CODE_RESPONSE;
+		return (await sendVerificationLinkResponse.json()) as SEND_VERIFICATION_LINK_RESPONSE;
 	};
 
 	public getVerificationLinkResults = async (user_phone_or_email_or_session_id: string) => {
