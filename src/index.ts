@@ -116,6 +116,7 @@ class authillo {
 			};
 		}
 	};
+
 	public getUserInfo = async (access_token: string) => {
 		const url = `https://auth.authillo.com/userinfo`;
 		const userInfoRes = await fetch(url, {
@@ -125,7 +126,7 @@ class authillo {
 		});
 		return (await userInfoRes.json()) as USERINFO_RESPONSE;
 	};
-	//
+
 	public sendVerificationLink = async (
 		user_phone_or_email: string,
 		attributes: Attribute[],
