@@ -139,7 +139,7 @@ class authillo {
 		const attributesParameter = attributes.reduce((prev, cur) => {
 			return prev + ` ${cur}`;
 		}, "");
-		const url = `https://auth.authillo.com/sendverificationlink?redirect_uri=${redirect_uri}&attributes=${attributesParameter}&user_phone_or_email=${user_phone_or_email}&client_id=${this.clientId}&client_secret=${this.clientSecret}`;
+		const url = `https://api.authillo.com/sendverificationlink?redirect_uri=${redirect_uri}&attributes=${attributesParameter}&user_phone_or_email=${user_phone_or_email}&client_id=${this.clientId}&client_secret=${this.clientSecret}`;
 		const sendVerificationLinkResponse = await fetch(url);
 		return (await sendVerificationLinkResponse.json()) as SEND_VERIFICATION_CODE_RESPONSE;
 	};
@@ -149,7 +149,7 @@ class authillo {
 			throw `invalid configuration -- [make sure .initialize() is run before calling .sendVerificationLink()]`;
 		if (this.enforceStrictSecurity === true)
 			throw "getVerificationLinkResults method is not allowed when enforceStrictSecurity is set to true. ";
-		const url = `https://auth.authillo.com/getverificationlinkresults?user_phone_or_email_or_session_id=${user_phone_or_email_or_session_id}&client_id=${this.clientId}&client_secret=${this.clientSecret}`;
+		const url = `https://api.authillo.com/getverificationlinkresults?user_phone_or_email_or_session_id=${user_phone_or_email_or_session_id}&client_id=${this.clientId}&client_secret=${this.clientSecret}`;
 		const getVerificationResults = await fetch(url);
 		return (await getVerificationResults.json()) as USERINFO_RESPONSE;
 	};
