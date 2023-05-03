@@ -17,5 +17,5 @@ export interface FAILED_SEND_VERIFICATION_CODE_FEEDBACK {
 export interface SUCCEEDED_SEND_VERIFICATION_CODE_FEEDBACK {
 	linkSent: boolean;
 	destination: string;
-	sessionId: string;
+	verificationSessionId: string;
 }

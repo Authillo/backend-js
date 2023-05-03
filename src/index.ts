@@ -125,6 +125,7 @@ class authillo {
 		});
 		return (await userInfoRes.json()) as USERINFO_RESPONSE;
 	};
+	//
 	public sendVerificationLink = async (
 		user_phone_or_email: string,
 		attributes: Attribute[],
@@ -141,31 +142,15 @@ class authillo {
 		const sendVerificationLinkResponse = await fetch(url);
 		return (await sendVerificationLinkResponse.json()) as SEND_VERIFICATION_CODE_RESPONSE;
 	};
-	// verify: (
-	// 	user_phone_number: string,
-	// 	attributes: Attribute[]
-	// ) => Promise<{ userStatus: "pending" | "verified" }> = async (
-	// 	user_phone_number: string,
-	// 	attributes: Attribute[]
-	// ) => {
-	// 	return { userStatus: "pending" };
-	// };
 
-	// getVerifiedInfo: (user_phone_number: string, attributes: Attribute[]) => Promise<result> = async (
-	// 	user_phone_number: string,
-	// 	attributes: Attribute[]
-	// ) => {
-	// 	return {
-	// 		user: {
-	// 			sub: "asdflkivnwi29040nsfl1i38fncsk10234uls10csdnf0s810cn",
-	// 			email: "james@authillo.com",
-	// 			faceInfo: {
-	// 				faceVerified: true,
-	// 				riskScore: 0,
-	// 				faceVerificationMR: true,
-	// 			},
-	// 		},
-	// 	};
-	// };
+	public getVerificationLinkResults = async (user_phone_or_email_or_session_id: string) => {
+		if (!this._initializationIsValid())
+			throw `invalid configuration -- [make sure .initialize() is run before calling .sendVerificationLink()]`;
+		if (this.enforceStrictSecurity === true)
+			throw "getVerificationLinkResults method is not allowed when enforceStrictSecurity is set to true. ";
+		const url = `https://auth.authillo.com/getverificationlinkresults?user_phone_or_email_or_session_id=${user_phone_or_email_or_session_id}&client_id=${this.clientId}&client_secret=${this.clientSecret}`;
+		const getVerificationResults = await fetch(url);
+		return (await getVerificationResults.json()) as USERINFO_RESPONSE;
+	};
 }
 export const Authillo = new authillo();
