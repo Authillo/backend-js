@@ -1,6 +1,6 @@
 {
 	"name": "@authillo/backend-js",
-	"version": "0.1.1",
+	"version": "0.2.0",
 	"description": "Backend package to help accelerate authillo integration for javascript (or typescript) based backends",
 	"main": "dist/cjs/index.js",
 	"module": "dist/mjs/index.js",
