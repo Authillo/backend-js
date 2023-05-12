@@ -49,10 +49,7 @@ class authillo {
 		return new Promise<{ unsafeCodeVerifier: string; unsafeCodeChallenge: string }>(() => {
 			// TODO- generate a hashed version
 			const unsafeCodeVerifier = "unsafeCodeVerifier";
-			const unsafeCodeChallenge = crypto
-				.createHash("sha256")
-				.update(unsafeCodeVerifier)
-				.digest("base64url");
+			const unsafeCodeChallenge = "EPOUnM9d4bXpIBboq-OQZ36Nu3vbwCdmCheHLUWtr-M";
 			return { unsafeCodeChallenge, unsafeCodeVerifier };
 		});
 	};
